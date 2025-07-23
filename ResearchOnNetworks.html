@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Digital Transformation of Bangladesh</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: The application is structured as a single-page dashboard with thematic sections for better usability. A sticky navigation bar allows users to jump between: 1) A main 'Dashboard' with key stats and challenges. 2) An interactive 'Network Evolution' timeline to explore 2G-5G. 3) An 'IoT Impact' section with clickable cards for different applications. 4) A 'Future' section outlining AI, 6G, and Edge Computing. This non-linear, thematic structure is more engaging and intuitive for exploration than the original paper's linear format, allowing users to focus on areas of interest. -->
+    <!-- Visualization & Content Choices: 1. Internet vs. Offline Population: A doughnut chart (Chart.js) to visually compare proportions. Interaction: Hover tooltips. Justification: More impactful than text. 2. Network Evolution (2G-5G): An interactive timeline (HTML/CSS/JS) where clicking a generation updates a content pane. Justification: Breaks down a long history into digestible, user-controlled segments. 3. IoT Applications & Challenges: Clickable cards (HTML/CSS/JS) with icons to organize information by sector. Justification: Visually separates topics for clarity. All choices prioritize interactivity and clarity over static text. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4;
+            color: #3D405B;
+        }
+        .nav-active {
+            color: #81B29A;
+            font-weight: 600;
+            border-bottom: 2px solid #81B29A;
+        }
+        .nav-item {
+            transition: color 0.3s ease;
+        }
+        .timeline-btn-active {
+            background-color: #81B29A !important;
+            color: #FFFFFF !important;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <header class="bg-white/80 backdrop-blur-lg sticky top-0 z-50 shadow-sm">
+        <nav class="container mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <h1 class="text-lg md:text-xl font-bold text-[#3D405B]">Digital Bangladesh</h1>
+                <div class="hidden sm:flex sm:space-x-8">
+                    <a href="#dashboard" class="nav-item text-gray-600 hover:text-[#81B29A] px-3 py-2 rounded-md text-sm font-medium">Dashboard</a>
+                    <a href="#evolution" class="nav-item text-gray-600 hover:text-[#81B29A] px-3 py-2 rounded-md text-sm font-medium">Evolution</a>
+                    <a href="#iot" class="nav-item text-gray-600 hover:text-[#81B29A] px-3 py-2 rounded-md text-sm font-medium">IoT Impact</a>
+                    <a href="#future" class="nav-item text-gray-600 hover:text-[#81B29A] px-3 py-2 rounded-md text-sm font-medium">The Future</a>
+                </div>
+                <div class="sm:hidden">
+                    <select id="mobile-nav" class="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50">
+                        <option value="#dashboard">Dashboard</option>
+                        <option value="#evolution">Evolution</option>
+                        <option value="#iot">IoT Impact</option>
+                        <option value="#future">The Future</option>
+                    </select>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+
+        <section id="hero" class="text-center mb-16">
+            <h2 class="text-3xl md:text-5xl font-bold text-[#3D405B] mb-4">The Digital Transformation of Bangladesh</h2>
+            <p class="max-w-3xl mx-auto text-lg text-gray-600">
+                An interactive analysis of the nation's wireless network evolution, performance, and societal impact, based on the vision of a "Digital Bangladesh." Explore the journey from 2G to the future of 6G.
+            </p>
+        </section>
+
+        <section id="dashboard" class="scroll-mt-20 mb-16">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-2 text-[#3D405B]">Current State Dashboard</h3>
+            <p class="text-center text-gray-600 mb-10">This section provides a snapshot of Bangladesh's digital landscape as of early 2025, highlighting key growth metrics alongside significant challenges. Interact with the chart to see the scale of the digital divide.</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <span class="text-4xl font-bold text-[#81B29A]">185M</span>
+                    <p class="text-gray-500 mt-2">Cellular Connections</p>
+                    <p class="text-sm text-gray-400">(106% of Population)</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <span class="text-4xl font-bold text-[#81B29A]">77.7M</span>
+                    <p class="text-gray-500 mt-2">Internet Users</p>
+                    <p class="text-sm text-gray-400">(44.5% Penetration)</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md text-center">
+                    <span class="text-4xl font-bold text-[#E07A5F]">96.9M</span>
+                    <p class="text-gray-500 mt-2">People Offline</p>
+                    <p class="text-sm text-gray-400">(55.5% of Population)</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h4 class="font-bold text-xl text-center mb-4">Digital Divide</h4>
+                    <div class="chart-container">
+                        <canvas id="digitalDivideChart"></canvas>
+                    </div>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h4 class="font-bold text-xl mb-4">Core Challenges</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">●</span><div><strong class="text-gray-700">Infrastructure Gaps:</strong> Inconsistent service quality, especially in rural areas.</div></li>
+                        <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">●</span><div><strong class="text-gray-700">5G Rollout Hurdles:</strong> High spectrum costs, foreign exchange issues, and low market demand.</div></li>
+                        <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">●</span><div><strong class="text-gray-700">Affordability:</strong> High internet prices and a heavy tax burden on telecom operators.</div></li>
+                        <li class="flex items-start"><span class="text-red-500 mr-3 mt-1">●</span><div><strong class="text-gray-700">Device Limitation:</strong> Prevalence of feature phones over smartphones limits access to digital services.</div></li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section id="evolution" class="scroll-mt-20 mb-16">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-2 text-[#3D405B]">Evolution of Cellular Networks</h3>
+            <p class="text-center text-gray-600 mb-10">This section traces the history of mobile communication in Bangladesh. Click on each generation to understand its specific impact, milestones, and challenges, revealing how each step built the foundation for the next.</p>
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="w-full md:w-1/4 flex md:flex-col justify-center gap-2">
+                    <button class="timeline-btn p-3 rounded-lg font-semibold text-gray-700 bg-white shadow-md transition-all duration-300" data-era="2g">2G</button>
+                    <button class="timeline-btn p-3 rounded-lg font-semibold text-gray-700 bg-white shadow-md transition-all duration-300" data-era="3g">3G</button>
+                    <button class="timeline-btn p-3 rounded-lg font-semibold text-gray-700 bg-white shadow-md transition-all duration-300" data-era="4g">4G</button>
+                    <button class="timeline-btn p-3 rounded-lg font-semibold text-gray-700 bg-white shadow-md transition-all duration-300" data-era="5g">5G</button>
+                </div>
+                <div id="evolution-content" class="w-full md:w-3/4 bg-white p-6 rounded-xl shadow-lg min-h-[300px]">
+                </div>
+            </div>
+        </section>
+
+        <section id="iot" class="scroll-mt-20 mb-16">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-2 text-[#3D405B]">The Impact of IoT</h3>
+            <p class="text-center text-gray-600 mb-10">The Internet of Things (IoT) is a key pillar of the "Digital Bangladesh" initiative. This section explores its applications in critical sectors and the challenges hindering its widespread adoption. Click the cards to learn more about each area.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                 <div class="iot-card bg-white p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105" data-iot="agriculture">
+                    <div class="text-4xl mb-3">🌾</div>
+                    <h4 class="font-bold text-xl mb-2">Smart Agriculture</h4>
+                    <p class="text-gray-600">Transforming farming with real-time data for irrigation, fertilization, and pest control.</p>
+                </div>
+                 <div class="iot-card bg-white p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105" data-iot="healthcare">
+                    <div class="text-4xl mb-3">❤️</div>
+                    <h4 class="font-bold text-xl mb-2">Remote Healthcare</h4>
+                    <p class="text-gray-600">Using telemedicine and remote monitoring to make healthcare more accessible in rural areas.</p>
+                </div>
+                 <div class="iot-card bg-white p-6 rounded-xl shadow-lg cursor-pointer transition-transform hover:scale-105" data-iot="cities">
+                    <div class="text-4xl mb-3">🏙️</div>
+                    <h4 class="font-bold text-xl mb-2">Smart Cities</h4>
+                    <p class="text-gray-600">Improving urban life through intelligent management of traffic, waste, and energy.</p>
+                </div>
+            </div>
+            <div id="iot-details" class="bg-white p-6 rounded-xl shadow-lg min-h-[150px] mb-10">
+                <p class="text-gray-500 text-center">Click on an application above to see details here.</p>
+            </div>
+             <div class="bg-white p-6 rounded-xl shadow-lg">
+                    <h4 class="font-bold text-xl mb-4">IoT Implementation Challenges</h4>
+                    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <li class="flex items-start"><span class="text-orange-500 mr-3 mt-1">●</span><div><strong class="text-gray-700">Connectivity:</strong> Unreliable internet outside major cities is a primary hurdle.</div></li>
+                        <li class="flex items-start"><span class="text-orange-500 mr-3 mt-1">●</span><div><strong class="text-gray-700">Power Consumption:</strong> Battery life is a critical issue for remote sensor nodes.</div></li>
+                        <li class="flex items-start"><span class="text-orange-500 mr-3 mt-1">●</span><div><strong class="text-gray-700">Security & Privacy:</strong> Protecting sensitive data collected by vast networks of devices.</div></li>
+                        <li class="flex items-start"><span class="text-orange-500 mr-3 mt-1">●</span><div><strong class="text-gray-700">High Costs:</strong> Sensor and infrastructure costs are a barrier to widespread adoption.</div></li>
+                    </ul>
+                </div>
+        </section>
+
+        <section id="future" class="scroll-mt-20">
+            <h3 class="text-2xl md:text-3xl font-bold text-center mb-2 text-[#3D405B]">The Future: Towards a "Smart Bangladesh"</h3>
+            <p class="text-center text-gray-600 mb-10">The next phase of Bangladesh's digital journey aims to create a smart, interconnected ecosystem. This section highlights the key technologies that will drive this transformation, moving from simple connectivity to integrated intelligence.</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-4xl mb-4">🧠</div>
+                    <h4 class="font-bold text-xl mb-2">AI-Driven Networks</h4>
+                    <p class="text-gray-600">AI will enable self-optimizing networks that predict traffic, manage resources dynamically, and enhance security, leading to greater efficiency and better user experiences.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h4 class="font-bold text-xl mb-2">The 6G Revolution</h4>
+                    <p class="text-gray-600">6G promises unprecedented speeds (up to 1 Tbps) and ultra-low latency, enabling futuristic applications like holographic communication, advanced XR, and responsive autonomous systems.</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg text-center">
+                    <div class="text-4xl mb-4">⚡️</div>
+                    <h4 class="font-bold text-xl mb-2">Edge Computing</h4>
+                    <p class="text-gray-600">Processing data closer to its source will reduce delays and bandwidth use, which is essential for real-time AI, industrial automation, and responsive smart city services.</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer class="bg-gray-800 text-white mt-16">
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-4 text-center text-sm">
+            <p>Based on the paper "The Digital Transformation of Bangladesh" by Dipraj Howlader.</p>
+            <p>Interactive visualization created to explore the report's key findings.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const digitalDivideData = {
+                labels: ['Internet Users (44.5%)', 'Population Offline (55.5%)'],
+                datasets: [{
+                    label: 'Digital Divide',
+                    data: [77.7, 96.9],
+                    backgroundColor: [
+                        '#81B29A',
+                        '#E07A5F'
+                    ],
+                    borderColor: '#F8F7F4',
+                    borderWidth: 4,
+                    hoverOffset: 4
+                }]
+            };
+
+            const digitalDivideConfig = {
+                type: 'doughnut',
+                data: digitalDivideData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '60%',
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                             labels: {
+                                color: '#3D405B',
+                                font: {
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + ' Million People';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            };
+
+            const digitalDivideChart = new Chart(
+                document.getElementById('digitalDivideChart'),
+                digitalDivideConfig
+            );
+
+            const evolutionContent = {
+                '2g': {
+                    title: '2G: The Beginning of Mass Communication',
+                    text: 'Launched in the late 1990s, 2G (GSM) technology marked the true beginning of widespread mobile telephony in Bangladesh. It provided fundamental voice and SMS services, connecting millions for the first time and serving as a critical backbone for basic connectivity, especially in rural regions, a role it still plays today for feature phone users.'
+                },
+                '3g': {
+                    title: '3G: The Dawn of Mobile Internet',
+                    text: 'Introduced in 2012-2013, 3G was a significant leap, enabling mobile broadband, video calls, and the use of smartphone apps. It revolutionized internet access, extending it beyond fixed lines and accelerating digital inclusion across all 64 districts, laying the groundwork for the digital economy.'
+                },
+                '4g': {
+                    title: '4G/LTE: The Era of High-Speed Data',
+                    text: 'Rolled out in 2018, 4G/LTE promised ultra-broadband speeds for data-intensive applications like HD streaming. However, its deployment has been uneven. While urban centers have adequate speeds, consistent quality and coverage in rural areas remain a challenge due to high costs, investment gaps, and a lack of fiber infrastructure.'
+                },
+                '5g': {
+                    title: '5G: The Next Frontier',
+                    text: 'Bangladesh is in the initial phases of 5G implementation. While trials have been conducted, commercial rollout faces formidable obstacles, including a foreign exchange crisis for equipment, high spectrum costs, and low market demand for 5G-enabled devices. Experts suggest strengthening the 4G foundation is critical before a full 5G leap.'
+                }
+            };
+
+            const evolutionContainer = document.getElementById('evolution-content');
+            const timelineButtons = document.querySelectorAll('.timeline-btn');
+
+            function updateEvolutionContent(era) {
+                const content = evolutionContent[era];
+                evolutionContainer.innerHTML = `
+                    <h4 class="font-bold text-xl mb-3">${content.title}</h4>
+                    <p class="text-gray-600 leading-relaxed">${content.text}</p>
+                `;
+                timelineButtons.forEach(btn => {
+                    btn.classList.remove('timeline-btn-active');
+                    if (btn.dataset.era === era) {
+                        btn.classList.add('timeline-btn-active');
+                    }
+                });
+            }
+
+            timelineButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    updateEvolutionContent(button.dataset.era);
+                });
+            });
+
+            updateEvolutionContent('2g');
+
+            const iotDetailsContent = {
+                'agriculture': {
+                    title: 'IoT in Smart Agriculture',
+                    text: 'In agriculture, IoT sensors monitor soil moisture, temperature, and nutrient content in real-time. This data allows farmers to make informed decisions about irrigation and fertilization, optimizing water use, reducing chemical waste, and improving crop yields, which is crucial for adapting to climate change.'
+                },
+                'healthcare': {
+                    title: 'IoT in Remote Healthcare',
+                    text: 'IoT-based telemedicine systems enable remote monitoring of patients\' vital signs through wearable sensors. This facilitates real-time consultations with doctors, making healthcare more accessible and affordable for rural populations who often have limited access to medical facilities.'
+                },
+                'cities': {
+                    title: 'IoT in Smart Cities',
+                    text: 'For smart cities, IoT applications aim to improve urban infrastructure by intelligently managing traffic flow, optimizing waste collection routes, and monitoring energy consumption. These initiatives, though nascent, are part of a larger vision to build sustainable urban environments.'
+                }
+            };
+            
+            const iotCards = document.querySelectorAll('.iot-card');
+            const iotDetailsContainer = document.getElementById('iot-details');
+
+            iotCards.forEach(card => {
+                card.addEventListener('click', () => {
+                    const iotType = card.dataset.iot;
+                    const content = iotDetailsContent[iotType];
+                    iotDetailsContainer.innerHTML = `
+                        <h4 class="font-bold text-xl mb-2">${content.title}</h4>
+                        <p class="text-gray-600">${content.text}</p>
+                    `;
+                });
+            });
+            
+            const navLinks = document.querySelectorAll('.nav-item');
+            const sections = document.querySelectorAll('section');
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        navLinks.forEach(link => {
+                            link.classList.remove('nav-active');
+                            if (link.getAttribute('href').substring(1) === entry.target.id) {
+                                link.classList.add('nav-active');
+                            }
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+            
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+
+            document.getElementById('mobile-nav').addEventListener('change', function(e) {
+                 document.querySelector(e.target.value).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+            });
+        });
+    </script>
+</body>
+</html>
